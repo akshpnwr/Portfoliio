@@ -1,621 +1,1012 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Akash Panwar — Fullstack Developer</title>
-<meta name="description" content="Akash Panwar — fullstack developer and founding engineer building end-to-end web applications. Based in Dehradun, India." />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Akash Panwar — Fullstack Developer</title>
+    <meta
+      name="description"
+      content="Akash Panwar — fullstack developer and founding engineer building end-to-end web applications. Based in Dehradun, India."
+    />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
-<link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css" />
 
-<!-- React + Babel pinned -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+    <!-- React + Babel pinned -->
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
 
-<script src="image-slot.js"></script>
-</head>
-<body>
-
-<!-- ── SVG defs shared across the page ─────────────────────── -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <!-- one sakura petal, base at top (narrow), tip at bottom with notch -->
-    <symbol id="sakura-petal" viewBox="0 0 100 100">
-      <path d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
-            fill="currentColor" />
-    </symbol>
-    <!-- a full 5-petal blossom — petal paths inlined (not <use>'d) so
+    <script src="image-slot.js"></script>
+  </head>
+  <body>
+    <!-- ── SVG defs shared across the page ─────────────────────── -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <!-- one sakura petal, base at top (narrow), tip at bottom with notch -->
+        <symbol id="sakura-petal" viewBox="0 0 100 100">
+          <path
+            d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            fill="currentColor"
+          />
+        </symbol>
+        <!-- a full 5-petal blossom — petal paths inlined (not <use>'d) so
          currentColor resolves correctly across nested symbols -->
-    <symbol id="sakura-flower" viewBox="-60 -60 120 120">
-      <g fill="var(--blossom)">
-        <path transform="rotate(0)   translate(-22 -50) scale(0.44)" d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"/>
-        <path transform="rotate(72)  translate(-22 -50) scale(0.44)" d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"/>
-        <path transform="rotate(144) translate(-22 -50) scale(0.44)" d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"/>
-        <path transform="rotate(216) translate(-22 -50) scale(0.44)" d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"/>
-        <path transform="rotate(288) translate(-22 -50) scale(0.44)" d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"/>
-      </g>
-      <g style="color: var(--accent)">
-        <circle r="6" cx="0" cy="0" fill="currentColor" opacity="0.18"/>
-      </g>
-      <g style="color: #c8954a">
-        <circle r="3" cx="0" cy="0" fill="currentColor"/>
-        <circle r="0.9" cx="-3" cy="-3" fill="currentColor" opacity="0.6"/>
-        <circle r="0.9" cx="3" cy="-3"  fill="currentColor" opacity="0.6"/>
-        <circle r="0.9" cx="3" cy="3"   fill="currentColor" opacity="0.6"/>
-        <circle r="0.9" cx="-3" cy="3"  fill="currentColor" opacity="0.6"/>
-        <circle r="0.9" cx="0" cy="0"   fill="#fff" opacity="0.6"/>
-      </g>
-    </symbol>
-    <!-- a half-open bud -->
-    <symbol id="sakura-bud" viewBox="-30 -30 60 60">
-      <ellipse cx="0" cy="0" rx="9" ry="14" fill="var(--blossom)" />
-      <ellipse cx="-3" cy="-3" rx="3" ry="6" fill="var(--accent)" opacity="0.35"/>
-    </symbol>
-  </defs>
-</svg>
+        <symbol id="sakura-flower" viewBox="-60 -60 120 120">
+          <g fill="var(--blossom)">
+            <path
+              transform="rotate(0)   translate(-22 -50) scale(0.44)"
+              d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            />
+            <path
+              transform="rotate(72)  translate(-22 -50) scale(0.44)"
+              d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            />
+            <path
+              transform="rotate(144) translate(-22 -50) scale(0.44)"
+              d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            />
+            <path
+              transform="rotate(216) translate(-22 -50) scale(0.44)"
+              d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            />
+            <path
+              transform="rotate(288) translate(-22 -50) scale(0.44)"
+              d="M50 4 C 28 4, 14 24, 19 50 C 23 72, 42 92, 48 84 C 49 81, 51 81, 52 84 C 58 92, 77 72, 81 50 C 86 24, 72 4, 50 4 Z"
+            />
+          </g>
+          <g style="color: var(--accent)">
+            <circle r="6" cx="0" cy="0" fill="currentColor" opacity="0.18" />
+          </g>
+          <g style="color: #c8954a">
+            <circle r="3" cx="0" cy="0" fill="currentColor" />
+            <circle r="0.9" cx="-3" cy="-3" fill="currentColor" opacity="0.6" />
+            <circle r="0.9" cx="3" cy="-3" fill="currentColor" opacity="0.6" />
+            <circle r="0.9" cx="3" cy="3" fill="currentColor" opacity="0.6" />
+            <circle r="0.9" cx="-3" cy="3" fill="currentColor" opacity="0.6" />
+            <circle r="0.9" cx="0" cy="0" fill="#fff" opacity="0.6" />
+          </g>
+        </symbol>
+        <!-- a half-open bud -->
+        <symbol id="sakura-bud" viewBox="-30 -30 60 60">
+          <ellipse cx="0" cy="0" rx="9" ry="14" fill="var(--blossom)" />
+          <ellipse
+            cx="-3"
+            cy="-3"
+            rx="3"
+            ry="6"
+            fill="var(--accent)"
+            opacity="0.35"
+          />
+        </symbol>
+      </defs>
+    </svg>
 
-<!-- ── nav ─────────────────────────────────────────────────── -->
-<nav class="nav" aria-label="Primary">
-  <div class="nav-inner">
-    <a href="#top" class="nav-mark"><span class="seal"></span>Akash Panwar</a>
-    <div class="nav-links">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#journal">Community</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
+    <!-- ── nav ─────────────────────────────────────────────────── -->
+    <nav class="nav" aria-label="Primary">
+      <div class="nav-inner">
+        <a href="#top" class="nav-mark"
+          ><span class="seal"></span>Akash Panwar</a
+        >
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="#journal">Community</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
 
-<main class="shell" id="top">
+    <main class="shell" id="top">
+      <!-- ── hero ────────────────────────────────────────────── -->
+      <section class="hero">
+        <div class="wrap">
+          <div class="hero-grid">
+            <div class="hero-copy reveal">
+              <div class="hero-meta">
+                <span><span class="dot"></span>Available · Spring '26</span>
+                <span>Dehradun, IN</span>
+                <span>Founding Engineer</span>
+              </div>
 
-  <!-- ── hero ────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div class="hero-copy reveal">
-          <div class="hero-meta">
-            <span><span class="dot"></span>Available · Spring '26</span>
-            <span>Dehradun, IN</span>
-            <span>Founding Engineer</span>
+              <div class="hero-title">
+                <span class="kanji-stamp jp" aria-hidden="true">桜</span>
+                <h1>
+                  <span class="line">Quiet code,</span>
+                  <span class="line"><em class="soft">in full</em> bloom.</span>
+                </h1>
+              </div>
+
+              <p class="hero-sub">
+                I'm <strong>Akash Panwar</strong>, a fullstack developer and
+                founding engineer building end-to-end web applications &mdash;
+                multi-tenant SaaS, commerce storefronts, and the quiet tooling
+                in between. React, Node, TypeScript and MongoDB, thoughtfully
+                assembled.
+              </p>
+
+              <div class="hero-cta">
+                <a href="#work" class="btn"
+                  >View Work <span class="arr">→</span></a
+                >
+                <a href="#contact" class="btn ghost">Start a Project</a>
+              </div>
+            </div>
+
+            <div class="hero-stage reveal" aria-hidden="true">
+              <div class="hero-art">
+                <div class="sunbeam"></div>
+                <!-- sakura branch SVG, drawn from upper-left across to lower-right -->
+                <svg
+                  class="branch"
+                  viewBox="0 0 600 750"
+                  preserveAspectRatio="xMidYMid slice"
+                >
+                  <!-- soft window-pane circle behind branch -->
+                  <circle
+                    cx="430"
+                    cy="220"
+                    r="170"
+                    fill="#fff"
+                    opacity="0.35"
+                  />
+                  <circle
+                    cx="430"
+                    cy="220"
+                    r="170"
+                    fill="url(#sun-grad)"
+                    opacity="0.55"
+                  />
+                  <defs>
+                    <radialGradient id="sun-grad" cx="0.5" cy="0.5" r="0.5">
+                      <stop offset="0%" stop-color="#ffe4cb" />
+                      <stop
+                        offset="60%"
+                        stop-color="#ffd4d2"
+                        stop-opacity="0.7"
+                      />
+                      <stop
+                        offset="100%"
+                        stop-color="#fbf3ee"
+                        stop-opacity="0"
+                      />
+                    </radialGradient>
+                  </defs>
+
+                  <!-- main branch -->
+                  <g fill="none" stroke="#4a3128" stroke-linecap="round">
+                    <path
+                      d="M-30 60 C 80 90, 150 160, 210 240 C 250 296, 240 360, 285 420 C 330 478, 410 510, 470 560 C 520 600, 560 680, 620 740"
+                      stroke-width="11"
+                    />
+                    <!-- offshoots -->
+                    <path
+                      d="M210 240 C 260 210, 320 196, 380 188"
+                      stroke-width="7"
+                    />
+                    <path
+                      d="M285 420 C 250 440, 215 470, 195 520"
+                      stroke-width="6"
+                    />
+                    <path
+                      d="M470 560 C 500 530, 540 500, 580 490"
+                      stroke-width="6"
+                    />
+                    <path
+                      d="M380 188 C 410 170, 450 170, 490 180"
+                      stroke-width="4.5"
+                    />
+                    <path
+                      d="M195 520 C 178 545, 168 580, 162 620"
+                      stroke-width="4"
+                    />
+                  </g>
+
+                  <!-- blossoms (the floating ones get tiny floatY animation via CSS class) -->
+                  <g class="b-cluster">
+                    <g transform="translate(380 188) scale(0.55)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(420 168) scale(0.45)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(465 178) scale(0.5)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(490 200) scale(0.42)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(340 200) scale(0.38)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(298 230) scale(0.4)">
+                      <use href="#sakura-flower" />
+                    </g>
+
+                    <g transform="translate(195 520) scale(0.5)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(178 558) scale(0.4)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(162 610) scale(0.46)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(225 488) scale(0.36)">
+                      <use href="#sakura-flower" />
+                    </g>
+
+                    <g transform="translate(580 490) scale(0.5)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(545 470) scale(0.42)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(515 510) scale(0.36)">
+                      <use href="#sakura-flower" />
+                    </g>
+
+                    <g transform="translate(60 90) scale(0.4)">
+                      <use href="#sakura-flower" />
+                    </g>
+                    <g transform="translate(110 130) scale(0.32)">
+                      <use href="#sakura-flower" />
+                    </g>
+
+                    <!-- a few buds -->
+                    <g transform="translate(450 150) scale(0.7)">
+                      <use href="#sakura-bud" />
+                    </g>
+                    <g transform="translate(150 555) scale(0.6)">
+                      <use href="#sakura-bud" />
+                    </g>
+                    <g transform="translate(605 470) scale(0.6)">
+                      <use href="#sakura-bud" />
+                    </g>
+                  </g>
+
+                  <!-- a few drifting petals around the branch -->
+                  <g style="color: var(--blossom)">
+                    <g transform="translate(160 380) rotate(20) scale(0.18)">
+                      <use href="#sakura-petal" x="-50" y="-50" />
+                    </g>
+                    <g transform="translate(310 510) rotate(-25) scale(0.16)">
+                      <use href="#sakura-petal" x="-50" y="-50" />
+                    </g>
+                    <g transform="translate(420 340) rotate(50) scale(0.14)">
+                      <use href="#sakura-petal" x="-50" y="-50" />
+                    </g>
+                    <g transform="translate(90 280) rotate(80) scale(0.13)">
+                      <use href="#sakura-petal" x="-50" y="-50" />
+                    </g>
+                  </g>
+                </svg>
+
+                <!-- floating ui cards -->
+                <div class="float-card fc-a">
+                  <div class="ico jp">採</div>
+                  <div>
+                    <span class="fc-label">Currently</span>
+                    <div class="fc-val">Founding Engineer · TalentGPT</div>
+                  </div>
+                </div>
+                <div class="float-card fc-b">
+                  <div class="ico jp">金</div>
+                  <div>
+                    <span class="fc-label">HackerRank</span>
+                    <div class="fc-val">Gold Badge · SQL</div>
+                  </div>
+                </div>
+                <div class="float-card fc-c">
+                  <div class="ico jp">学</div>
+                  <div>
+                    <span class="fc-label">Education</span>
+                    <div class="fc-val">MCA · CGPA 8.7</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true">
+        <span class="rule"></span>
+        <svg
+          width="22"
+          height="22"
+          viewBox="-60 -60 120 120"
+          style="color: var(--accent)"
+        >
+          <use href="#sakura-flower" />
+        </svg>
+        <span class="rule"></span>
+      </div>
+
+      <!-- ── about ───────────────────────────────────────────── -->
+      <section id="about">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">i.</span>
+              <h2>A patient kind of engineering.</h2>
+            </div>
+            <p class="lede">
+              Four years and a clutch of internships brought me from front-end
+              fixes to founding-engineer work. Today I build the whole stretch
+              &mdash; data models, APIs, and the interfaces that sit on top
+              &mdash; for founders and small teams who care about the details
+              most people meet three months in.
+            </p>
           </div>
 
-          <div class="hero-title">
-            <span class="kanji-stamp jp" aria-hidden="true">桜</span>
-            <h1>
-              <span class="line">Quiet code,</span>
-              <span class="line"><em class="soft">in full</em> bloom.</span>
-            </h1>
+          <div class="about-grid">
+            <div class="about-portrait reveal">
+              <image-slot
+                id="about-portrait"
+                placeholder="Drop a portrait of yourself here"
+                shape="rounded"
+                radius="20"
+              ></image-slot>
+              <div class="corner-stamp jp" aria-hidden="true">柏</div>
+            </div>
+            <div class="about-body reveal">
+              <p>
+                I treat a codebase like a garden &mdash; pruned with intention,
+                planted for the season after this one, never crowded with
+                shrubbery I won't tend to. As founding engineer at TalentGPT I
+                own a multi-tenant hiring platform end to end, from the MongoDB
+                schema up to the React interface recruiters live in.
+              </p>
+              <p class="muted">
+                My path runs from a Frontend internship at Closetnerds, through
+                an IBM-mentored machine-learning project at Phemesoft, to
+                building production SaaS today. I picked up a Master of Computer
+                Applications from UPES Dehradun (CGPA 8.7) along the way. I
+                write in JavaScript and TypeScript by default, reach for Node,
+                Express, and MongoDB on the backend, and have shipped a fair few
+                Shopify storefronts in Liquid when the brief called for
+                commerce.
+              </p>
+
+              <div class="facts">
+                <div>
+                  <div class="k">Writing code</div>
+                  <div class="v">02<small>+ yr</small></div>
+                </div>
+                <div>
+                  <div class="k">Projects shipped</div>
+                  <div class="v">12<small>+</small></div>
+                </div>
+                <div>
+                  <div class="k">MCA · CGPA</div>
+                  <div class="v">8.7</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── projects ─────────────────────────────────────────── -->
+      <section id="work" class="projects">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">ii.</span>
+              <h2>Selected work.</h2>
+            </div>
+            <p class="lede">
+              A recent harvest &mdash; production SaaS, full-stack commerce,
+              developer tooling, and Shopify storefronts. Drop your own
+              screenshots into the frames to see how each case would feel.
+            </p>
           </div>
 
-          <p class="hero-sub">
-            I'm <strong>Akash Panwar</strong>, a fullstack developer and founding engineer building end-to-end web applications &mdash; multi-tenant SaaS, commerce storefronts, and the quiet tooling in between. React, Node, TypeScript and MongoDB, thoughtfully assembled.
+          <div class="projects-list">
+            <article class="project reveal">
+              <div class="project-art shot">
+                <span class="tag">SaaS · Founding Engineer · 2025</span>
+                <image-slot
+                  id="proj-talentgpt-v2"
+                  src="assets/talentgpt.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  TalentGPT
+                  <span class="jp-sub"
+                    >採用 · multi-tenant hiring platform</span
+                  >
+                </h3>
+                <p>
+                  A job-portal SaaS where recruiters run hiring end to end
+                  &mdash; postings, candidates, and workflows in one place. I
+                  built the scalable backend services, an ATS-style candidate
+                  scoring and search system with server-side pagination, and a
+                  React front end on TanStack Router &amp; Query with
+                  organization-level, role-based access for a true multi-tenant
+                  architecture.
+                </p>
+                <div class="project-stack">
+                  <span>Node.js</span><span>Express</span><span>MongoDB</span
+                  ><span>React</span><span>TanStack Query</span
+                  ><span>RBAC</span>
+                </div>
+                <div class="project-links">
+                  <a href="#" rel="noopener">Live ↗</a>
+                  <a href="https://github.com/akshpnwr" rel="noopener"
+                    >GitHub ↗</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reverse reveal">
+              <div class="project-art shot">
+                <span class="tag"
+                  >Shopify Storefront · Leather Brand · 2024</span
+                >
+                <image-slot
+                  id="proj-jamesaston"
+                  src="assets/jamesaston.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  James Aston
+                  <span class="jp-sub">革 · premium leather house</span>
+                </h3>
+                <p>
+                  A custom Shopify storefront for a premium leather house
+                  working in vegetable-tanned, full-grain hides — belts, bags,
+                  wallets and clutches. Bespoke Liquid sections for editorial
+                  collection stories, a layered product catalogue across men's,
+                  women's and corporate-gifting lines, and a checkout tuned for
+                  a high-consideration luxury purchase.
+                </p>
+                <div class="project-stack">
+                  <span>Shopify</span><span>Liquid</span><span>JavaScript</span
+                  ><span>HTML</span><span>CSS</span>
+                </div>
+                <div class="project-links">
+                  <a href="https://jamesaston.in/" rel="noopener">Live ↗</a>
+                  <a href="https://github.com/akshpnwr" rel="noopener"
+                    >GitHub ↗</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal">
+              <div class="project-art shot">
+                <span class="tag">School Website · Wix · Dehradun · 2024</span>
+                <image-slot
+                  id="proj-bpstilwari"
+                  src="assets/bpstilwari.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  Baluni Public School
+                  <span class="jp-sub">学校 · CBSE school, Dehradun</span>
+                </h3>
+                <p>
+                  A full institutional website for Baluni Public School — a
+                  CBSE-affiliated school in Tilwari, Bhauwala, Dehradun. The
+                  site covers the complete school experience: academics,
+                  admissions, student life, campus gallery, and contact, built
+                  to serve students, parents, and staff. Smart learning values
+                  and a vibrant community voice come through in every section.
+                </p>
+                <div class="project-stack">
+                  <span>Wix</span><span>CMS</span><span>HTML</span
+                  ><span>CSS</span><span>Responsive Design</span>
+                </div>
+                <div class="project-links">
+                  <a href="https://www.bpstilwari.in/" rel="noopener">Live ↗</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project reverse reveal">
+              <div class="project-art shot">
+                <span class="tag">SaaS Landing · Lead-Gen AI · 2025</span>
+                <image-slot
+                  id="proj-rvl"
+                  src="assets/realestateverifiedleads.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  realestateverifiedleads.ai
+                  <span class="jp-sub"
+                    >検証 · voice-verified property buyers</span
+                  >
+                </h3>
+                <p>
+                  A conversion-focused SaaS landing site for an AI
+                  lead-generation platform that connects real-estate teams with
+                  voice-verified property buyers. RVL bridges mass digital
+                  outreach and precision sales conversions — insulating the
+                  sales floor from unverified noise through a 5-tier
+                  qualification flow so closers spend 100% of their time on
+                  genuine buyers.
+                </p>
+                <div class="project-stack">
+                  <span>React</span><span>Tailwind</span
+                  ><span>Framer Motion</span><span>Vite</span>
+                </div>
+                <div class="project-links">
+                  <a href="https://realestateverifiedleads.ai/" rel="noopener"
+                    >Live ↗</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="project reveal">
+              <div class="project-art shot">
+                <span class="tag">SaaS Platform · Marine Reporting · 2025</span>
+                <image-slot
+                  id="proj-ireportify"
+                  src="assets/ireportify.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  iReportify
+                  <span class="jp-sub"
+                    >船 · marine &amp; industrial reporting</span
+                  >
+                </h3>
+                <p>
+                  A smart, image-based reporting platform built for marine
+                  engineers, supervisors, and shipping professionals. iReportify
+                  lets teams capture, upload, and share inspection reports
+                  instantly from anywhere in the world — with report generation,
+                  folder organization, and custom cover pages that simplify
+                  reporting and amplify on-board efficiency.
+                </p>
+                <div class="project-stack">
+                  <span>React</span><span>Node.js</span><span>Express</span
+                  ><span>MongoDB</span><span>AWS S3</span>
+                </div>
+                <div class="project-links">
+                  <a href="https://ireportify.com/" rel="noopener">Live ↗</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project reverse reveal">
+              <div class="project-art shot">
+                <span class="tag"
+                  >Travel Platform · Himalayan Tourism · 2025</span
+                >
+                <image-slot
+                  id="proj-easyprime"
+                  src="assets/easyprimeholidays.png"
+                  fit="cover"
+                  placeholder="Drop a 1906×1080 screenshot"
+                  shape="rounded"
+                  radius="10"
+                ></image-slot>
+              </div>
+              <div class="project-body">
+                <h3>
+                  Easy Prime Holidays
+                  <span class="jp-sub"
+                    >旅 · your TripAdvisor for Himalayan travels</span
+                  >
+                </h3>
+                <p>
+                  A travel-discovery and booking platform built as a TripAdvisor
+                  for Himalayan journeys. Travelers search by destination,
+                  dates, and party size to plan trips across the region, while
+                  curated destinations, blogs, and services guide every step —
+                  all wrapped in a calm, mountain-inspired interface designed to
+                  make exploring the Himalayas effortless.
+                </p>
+                <div class="project-stack">
+                  <span>React</span><span>Node.js</span><span>Express</span
+                  ><span>MongoDB</span><span>Tailwind</span>
+                </div>
+                <div class="project-links">
+                  <a href="https://www.easyprimeholidays.com/" rel="noopener"
+                    >Live ↗</a
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── skills ──────────────────────────────────────────── -->
+      <section class="skills">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">iii.</span>
+              <h2>The toolkit.</h2>
+            </div>
+            <p class="lede">
+              A working list, not a wish list &mdash; the languages, frameworks,
+              and tools I actually reach for in production.
+            </p>
+          </div>
+
+          <div class="skill-grid">
+            <div class="skill-card reveal">
+              <h4>Languages</h4>
+              <span class="skill-sub jp">語 · the words</span>
+              <div class="badges">
+                <span class="badge">JavaScript</span>
+                <span class="badge">TypeScript</span>
+                <span class="badge">Python</span>
+                <span class="badge">C++</span>
+                <span class="badge">SQL</span>
+              </div>
+            </div>
+
+            <div class="skill-card reveal">
+              <h4>Frontend</h4>
+              <span class="skill-sub jp">表 · the surface</span>
+              <div class="badges">
+                <span class="badge">React</span>
+                <span class="badge">Remix</span>
+                <span class="badge">Tailwind CSS</span>
+                <span class="badge">TanStack Query</span>
+                <span class="badge">Zustand</span>
+                <span class="badge">Redux</span>
+                <span class="badge">Shadcn UI</span>
+              </div>
+            </div>
+
+            <div class="skill-card reveal">
+              <h4>Backend &amp; Data</h4>
+              <span class="skill-sub jp">裏 · what holds it up</span>
+              <div class="badges">
+                <span class="badge">Node.js</span>
+                <span class="badge">Express</span>
+                <span class="badge">MongoDB</span>
+                <span class="badge">SQL</span>
+                <span class="badge">WebSockets</span>
+                <span class="badge">Firebase</span>
+                <span class="badge">REST APIs</span>
+              </div>
+            </div>
+
+            <div class="skill-card reveal">
+              <h4>Tools &amp; Platforms</h4>
+              <span class="skill-sub jp">道 · the way of working</span>
+              <div class="badges">
+                <span class="badge">Git</span>
+                <span class="badge">Shopify</span>
+                <span class="badge">Liquid</span>
+                <span class="badge">Postman</span>
+                <span class="badge">VS Code</span>
+                <span class="badge">Monaco</span>
+                <span class="badge">esbuild</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── experience ─────────────────────────────────────── -->
+      <section id="experience" class="process">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">iv.</span>
+              <h2>The path so far.</h2>
+            </div>
+            <p class="lede">
+              From front-end fixes to founding-engineer work, in the order it
+              happened. Each stop taught me something I still carry into the
+              next build.
+            </p>
+          </div>
+
+          <div class="process-list">
+            <div class="process-step reveal">
+              <div class="pstep-num">'25</div>
+              <div class="pstep-title">
+                Founding Engineer<span class="jp-sub"
+                  >TalentGPT · Remote · Oct 2025 — Present</span
+                >
+              </div>
+              <div class="pstep-body">
+                Building a job-portal SaaS from the ground up — scalable Node,
+                Express and MongoDB services for listings, applications and
+                users, ATS-style candidate filtering and search, and a React +
+                TanStack front end with multi-tenant, role-based access.
+                Server-side pagination and query tuning keep it fast as it
+                grows.
+              </div>
+            </div>
+            <div class="process-step reveal">
+              <div class="pstep-num">'24</div>
+              <div class="pstep-title">
+                Project Intern<span class="jp-sub"
+                  >Phemesoft · IBM Mentorship · Jan — Apr 2024</span
+                >
+              </div>
+              <div class="pstep-body">
+                Built a machine-learning project under IBM mentorship,
+                implementing k-means clustering to personalize song
+                recommendations and lifting recommendation accuracy by 25%.
+                Worked in Python with scikit-learn and TensorFlow.
+              </div>
+            </div>
+            <div class="process-step reveal">
+              <div class="pstep-num">'23</div>
+              <div class="pstep-title">
+                Frontend Developer Intern<span class="jp-sub"
+                  >Closetnerds · Remote · Feb — May 2023</span
+                >
+              </div>
+              <div class="pstep-body">
+                Crafted responsive pages in React that cut load times and lifted
+                engagement, partnered with the design team on UI/UX
+                improvements, and drove debugging work that brought site
+                downtime down by 15%.
+              </div>
+            </div>
+            <div class="process-step reveal">
+              <div class="pstep-num">'23</div>
+              <div class="pstep-title">
+                Content Writer Intern<span class="jp-sub"
+                  >OPPO · Remote · Mar — Jun 2023</span
+                >
+              </div>
+              <div class="pstep-body">
+                Produced gaming-community and mobile-games content for the
+                Indian market — a 15% lift in audience engagement — backed by
+                research and analysis that improved content relevance by 20%.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── recognition ───────────────────────────────────── -->
+      <section class="recognition">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">v.</span>
+              <h2>Marks along the way.</h2>
+            </div>
+            <p class="lede">
+              The degrees, badges, and certificates picked up between builds. A
+              meticulous, quick-learning habit — kept up one course at a time.
+            </p>
+          </div>
+
+          <div class="rec-grid">
+            <div class="rec-card reveal">
+              <h4>Education</h4>
+              <span class="rec-sub jp">学 · the study</span>
+              <div class="rec-item">
+                <div class="rec-t">Master of Computer Applications</div>
+                <div class="rec-m">UPES Dehradun · CGPA 8.7 · 2022–2024</div>
+              </div>
+              <div class="rec-item">
+                <div class="rec-t">Bachelor of Computer Applications</div>
+                <div class="rec-m">
+                  Uttaranchal University · CGPA 8.6 · 2018–2021
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-card reveal">
+              <h4>Badges</h4>
+              <span class="rec-sub jp">章 · the marks</span>
+              <div class="rec-item">
+                <div class="rec-t">HackerRank Gold — SQL</div>
+                <div class="rec-m">
+                  Strong database query &amp; data manipulation
+                </div>
+              </div>
+              <div class="rec-item">
+                <div class="rec-t">Hacktoberfest 2022</div>
+                <div class="rec-m">Awarded contributor badge</div>
+              </div>
+              <div class="rec-item">
+                <div class="rec-t">Best Performer — Web Team</div>
+                <div class="rec-m">OPEN Community, UPES · 2022–23</div>
+              </div>
+            </div>
+
+            <div class="rec-card reveal">
+              <h4>Certifications</h4>
+              <span class="rec-sub jp">証 · the proof</span>
+              <div class="rec-item">
+                <div class="rec-t">React &amp; TypeScript</div>
+                <div class="rec-m">Stephen Grider · Udemy · 2024</div>
+              </div>
+              <div class="rec-item">
+                <div class="rec-t">React — The Complete Guide</div>
+                <div class="rec-m">Academind · Udemy · 2023</div>
+              </div>
+              <div class="rec-item">
+                <div class="rec-t">The Complete JavaScript Course</div>
+                <div class="rec-m">~70 hours · Udemy · 2021</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── journal ─────────────────────────────────────────── -->
+      <section id="journal" class="journal">
+        <div class="wrap">
+          <div class="sect-head reveal">
+            <div>
+              <span class="sect-num">vi.</span>
+              <h2>Beyond the keyboard.</h2>
+            </div>
+            <p class="lede">
+              Community work, event sites, and open-source contributions made
+              alongside the day-to-day — usually with student teams and the
+              people I learned this craft with.
+            </p>
+          </div>
+
+          <div class="journal-list">
+            <article class="j-card reveal">
+              <div class="j-meta">
+                <span>Event Site</span><span class="dot"></span
+                ><span>UPES-OPEN × WEBCRUX</span>
+              </div>
+              <h4>Dehashed</h4>
+              <p>
+                Built the website for the Dehashed event organised by UPES-OPEN
+                and WEBCRUX as a core member of the web team.
+              </p>
+            </article>
+            <article class="j-card reveal">
+              <div class="j-meta">
+                <span>Community</span><span class="dot"></span
+                ><span>Front-end</span>
+              </div>
+              <h4>UPES-OPEN</h4>
+              <p>
+                Developed the front-end of the UPES-OPEN community website,
+                working with the student developer team through 2022–23.
+              </p>
+            </article>
+            <article class="j-card reveal">
+              <div class="j-meta">
+                <span>Open Source</span><span class="dot"></span
+                ><span>Hacktoberfest</span>
+              </div>
+              <h4>Open-source contributions</h4>
+              <p>
+                Active in open source — contributions across Hacktoberfest 2022
+                and the occasional pull request to tools I rely on.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── contact ─────────────────────────────────────────── -->
+      <section id="contact" class="contact">
+        <div class="wrap">
+          <span
+            class="eyebrow no-rule"
+            style="margin-bottom: 22px; display: inline-block"
+            >Spring 2026 · Open to new work</span
+          >
+          <h2>Let's build something <em>worth tending to.</em></h2>
+          <p class="lede">
+            If you're a founder, a small studio, or a product team with a
+            project that deserves real care end to end &mdash; from data model
+            to interface &mdash; I'd love to hear about it. A short note works
+            best.
           </p>
+          <div class="contact-cta">
+            <a href="mailto:akashpanwar9976@gmail.com" class="btn"
+              >akashpanwar9976@gmail.com <span class="arr">→</span></a
+            >
+            <a
+              href="https://github.com/akshpnwr"
+              class="btn ghost"
+              rel="noopener"
+              >See the code on GitHub</a
+            >
+          </div>
 
-          <div class="hero-cta">
-            <a href="#work" class="btn">View Work <span class="arr">→</span></a>
-            <a href="#contact" class="btn ghost">Start a Project</a>
+          <div class="contact-channels">
+            <a href="https://github.com/akshpnwr" rel="noopener">GitHub ↗</a>
+            <a
+              href="https://linkedin.com/in/akash-panwar-27b0141bb"
+              rel="noopener"
+              >LinkedIn ↗</a
+            >
+            <a href="https://leetcode.com/akshpnwr" rel="noopener"
+              >LeetCode ↗</a
+            >
+            <a
+              href="https://salesforce.com/trailblazer/wpabg5kqn9smn0nbjg"
+              rel="noopener"
+              >Trailblazer ↗</a
+            >
           </div>
         </div>
+      </section>
 
-        <div class="hero-stage reveal" aria-hidden="true">
-          <div class="hero-art">
-            <div class="sunbeam"></div>
-            <!-- sakura branch SVG, drawn from upper-left across to lower-right -->
-            <svg class="branch" viewBox="0 0 600 750" preserveAspectRatio="xMidYMid slice">
-              <!-- soft window-pane circle behind branch -->
-              <circle cx="430" cy="220" r="170" fill="#fff" opacity="0.35"/>
-              <circle cx="430" cy="220" r="170" fill="url(#sun-grad)" opacity="0.55"/>
-              <defs>
-                <radialGradient id="sun-grad" cx="0.5" cy="0.5" r="0.5">
-                  <stop offset="0%" stop-color="#ffe4cb"/>
-                  <stop offset="60%" stop-color="#ffd4d2" stop-opacity="0.7"/>
-                  <stop offset="100%" stop-color="#fbf3ee" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-
-              <!-- main branch -->
-              <g fill="none" stroke="#4a3128" stroke-linecap="round">
-                <path d="M-30 60 C 80 90, 150 160, 210 240 C 250 296, 240 360, 285 420 C 330 478, 410 510, 470 560 C 520 600, 560 680, 620 740" stroke-width="11"/>
-                <!-- offshoots -->
-                <path d="M210 240 C 260 210, 320 196, 380 188" stroke-width="7"/>
-                <path d="M285 420 C 250 440, 215 470, 195 520" stroke-width="6"/>
-                <path d="M470 560 C 500 530, 540 500, 580 490" stroke-width="6"/>
-                <path d="M380 188 C 410 170, 450 170, 490 180" stroke-width="4.5"/>
-                <path d="M195 520 C 178 545, 168 580, 162 620" stroke-width="4"/>
-              </g>
-
-              <!-- blossoms (the floating ones get tiny floatY animation via CSS class) -->
-              <g class="b-cluster">
-                <g transform="translate(380 188) scale(0.55)"><use href="#sakura-flower"/></g>
-                <g transform="translate(420 168) scale(0.45)"><use href="#sakura-flower"/></g>
-                <g transform="translate(465 178) scale(0.5)"><use href="#sakura-flower"/></g>
-                <g transform="translate(490 200) scale(0.42)"><use href="#sakura-flower"/></g>
-                <g transform="translate(340 200) scale(0.38)"><use href="#sakura-flower"/></g>
-                <g transform="translate(298 230) scale(0.4)"><use href="#sakura-flower"/></g>
-
-                <g transform="translate(195 520) scale(0.5)"><use href="#sakura-flower"/></g>
-                <g transform="translate(178 558) scale(0.4)"><use href="#sakura-flower"/></g>
-                <g transform="translate(162 610) scale(0.46)"><use href="#sakura-flower"/></g>
-                <g transform="translate(225 488) scale(0.36)"><use href="#sakura-flower"/></g>
-
-                <g transform="translate(580 490) scale(0.5)"><use href="#sakura-flower"/></g>
-                <g transform="translate(545 470) scale(0.42)"><use href="#sakura-flower"/></g>
-                <g transform="translate(515 510) scale(0.36)"><use href="#sakura-flower"/></g>
-
-                <g transform="translate(60 90) scale(0.4)"><use href="#sakura-flower"/></g>
-                <g transform="translate(110 130) scale(0.32)"><use href="#sakura-flower"/></g>
-
-                <!-- a few buds -->
-                <g transform="translate(450 150) scale(0.7)"><use href="#sakura-bud"/></g>
-                <g transform="translate(150 555) scale(0.6)"><use href="#sakura-bud"/></g>
-                <g transform="translate(605 470) scale(0.6)"><use href="#sakura-bud"/></g>
-              </g>
-
-              <!-- a few drifting petals around the branch -->
-              <g style="color: var(--blossom)">
-                <g transform="translate(160 380) rotate(20) scale(0.18)"><use href="#sakura-petal" x="-50" y="-50"/></g>
-                <g transform="translate(310 510) rotate(-25) scale(0.16)"><use href="#sakura-petal" x="-50" y="-50"/></g>
-                <g transform="translate(420 340) rotate(50) scale(0.14)"><use href="#sakura-petal" x="-50" y="-50"/></g>
-                <g transform="translate(90 280) rotate(80) scale(0.13)"><use href="#sakura-petal" x="-50" y="-50"/></g>
-              </g>
-            </svg>
-
-            <!-- floating ui cards -->
-            <div class="float-card fc-a">
-              <div class="ico jp">採</div>
-              <div>
-                <span class="fc-label">Currently</span>
-                <div class="fc-val">Founding Engineer · TalentGPT</div>
-              </div>
-            </div>
-            <div class="float-card fc-b">
-              <div class="ico jp">金</div>
-              <div>
-                <span class="fc-label">HackerRank</span>
-                <div class="fc-val">Gold Badge · SQL</div>
-              </div>
-            </div>
-            <div class="float-card fc-c">
-              <div class="ico jp">学</div>
-              <div>
-                <span class="fc-label">Education</span>
-                <div class="fc-val">MCA · CGPA 8.7</div>
-              </div>
-            </div>
-          </div>
+      <footer>
+        <div class="wrap">
+          <div>© 2026 Akash Panwar · Fullstack developer · Dehradun, India</div>
+          <div class="jp">桜 · built with care, in spring</div>
         </div>
-      </div>
-    </div>
-  </section>
+      </footer>
+    </main>
 
-  <div class="divider" aria-hidden="true">
-    <span class="rule"></span>
-    <svg width="22" height="22" viewBox="-60 -60 120 120" style="color: var(--accent)"><use href="#sakura-flower"/></svg>
-    <span class="rule"></span>
-  </div>
+    <!-- petals + tweaks app -->
+    <div id="petals-root" class="petals-layer" aria-hidden="true"></div>
+    <div id="tweaks-root"></div>
 
-  <!-- ── about ───────────────────────────────────────────── -->
-  <section id="about">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">i.</span>
-          <h2>A patient kind of engineering.</h2>
-        </div>
-        <p class="lede">Four years and a clutch of internships brought me from front-end fixes to founding-engineer work. Today I build the whole stretch &mdash; data models, APIs, and the interfaces that sit on top &mdash; for founders and small teams who care about the details most people meet three months in.</p>
-      </div>
+    <script type="text/babel" src="tweaks-panel.jsx"></script>
+    <script type="text/babel" src="app.jsx"></script>
 
-      <div class="about-grid">
-        <div class="about-portrait reveal">
-          <image-slot id="about-portrait" placeholder="Drop a portrait of yourself here" shape="rounded" radius="20"></image-slot>
-          <div class="corner-stamp jp" aria-hidden="true">柏</div>
-        </div>
-        <div class="about-body reveal">
-          <p>I treat a codebase like a garden &mdash; pruned with intention, planted for the season after this one, never crowded with shrubbery I won't tend to. As founding engineer at TalentGPT I own a multi-tenant hiring platform end to end, from the MongoDB schema up to the React interface recruiters live in.</p>
-          <p class="muted">My path runs from a Frontend internship at Closetnerds, through an IBM-mentored machine-learning project at Phemesoft, to building production SaaS today. I picked up a Master of Computer Applications from UPES Dehradun (CGPA 8.7) along the way. I write in JavaScript and TypeScript by default, reach for Node, Express, and MongoDB on the backend, and have shipped a fair few Shopify storefronts in Liquid when the brief called for commerce.</p>
-
-          <div class="facts">
-            <div>
-              <div class="k">Writing code</div>
-              <div class="v">05<small>+ yr</small></div>
-            </div>
-            <div>
-              <div class="k">Projects shipped</div>
-              <div class="v">12<small>+</small></div>
-            </div>
-            <div>
-              <div class="k">MCA · CGPA</div>
-              <div class="v">8.7</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── projects ─────────────────────────────────────────── -->
-  <section id="work" class="projects">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">ii.</span>
-          <h2>Selected work.</h2>
-        </div>
-        <p class="lede">A recent harvest &mdash; production SaaS, full-stack commerce, developer tooling, and Shopify storefronts. Drop your own screenshots into the frames to see how each case would feel.</p>
-      </div>
-
-      <div class="projects-list">
-
-        <article class="project reveal">
-          <div class="project-art shot">
-            <span class="tag">SaaS · Founding Engineer · 2025</span>
-            <image-slot id="proj-talentgpt-v2" src="assets/talentgpt.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>TalentGPT
-              <span class="jp-sub">採用 · multi-tenant hiring platform</span>
-            </h3>
-            <p>A job-portal SaaS where recruiters run hiring end to end &mdash; postings, candidates, and workflows in one place. I built the scalable backend services, an ATS-style candidate scoring and search system with server-side pagination, and a React front end on TanStack Router &amp; Query with organization-level, role-based access for a true multi-tenant architecture.</p>
-            <div class="project-stack">
-              <span>Node.js</span><span>Express</span><span>MongoDB</span><span>React</span><span>TanStack Query</span><span>RBAC</span>
-            </div>
-            <div class="project-links">
-              <a href="#" rel="noopener">Live ↗</a>
-              <a href="https://github.com/akshpnwr" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reverse reveal">
-          <div class="project-art shot">
-            <span class="tag">Shopify Storefront · Leather Brand · 2024</span>
-            <image-slot id="proj-jamesaston" src="assets/jamesaston.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>James Aston
-              <span class="jp-sub">革 · premium leather house</span>
-            </h3>
-            <p>A custom Shopify storefront for a premium leather house working in vegetable-tanned, full-grain hides — belts, bags, wallets and clutches. Bespoke Liquid sections for editorial collection stories, a layered product catalogue across men's, women's and corporate-gifting lines, and a checkout tuned for a high-consideration luxury purchase.</p>
-            <div class="project-stack">
-              <span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>HTML</span><span>CSS</span>
-            </div>
-            <div class="project-links">
-              <a href="https://jamesaston.in/" rel="noopener">Live ↗</a>
-              <a href="https://github.com/akshpnwr" rel="noopener">GitHub ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reveal">
-          <div class="project-art shot">
-            <span class="tag">School Website · Wix · Dehradun · 2024</span>
-            <image-slot id="proj-bpstilwari" src="assets/bpstilwari.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>Baluni Public School
-              <span class="jp-sub">学校 · CBSE school, Dehradun</span>
-            </h3>
-            <p>A full institutional website for Baluni Public School — a CBSE-affiliated school in Tilwari, Bhauwala, Dehradun. The site covers the complete school experience: academics, admissions, student life, campus gallery, and contact, built to serve students, parents, and staff. Smart learning values and a vibrant community voice come through in every section.</p>
-            <div class="project-stack">
-              <span>Wix</span><span>CMS</span><span>HTML</span><span>CSS</span><span>Responsive Design</span>
-            </div>
-            <div class="project-links">
-              <a href="https://www.bpstilwari.in/" rel="noopener">Live ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reverse reveal">
-          <div class="project-art shot">
-            <span class="tag">SaaS Landing · Lead-Gen AI · 2025</span>
-            <image-slot id="proj-rvl" src="assets/realestateverifiedleads.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>realestateverifiedleads.ai
-              <span class="jp-sub">検証 · voice-verified property buyers</span>
-            </h3>
-            <p>A conversion-focused SaaS landing site for an AI lead-generation platform that connects real-estate teams with voice-verified property buyers. RVL bridges mass digital outreach and precision sales conversions — insulating the sales floor from unverified noise through a 5-tier qualification flow so closers spend 100% of their time on genuine buyers.</p>
-            <div class="project-stack">
-              <span>React</span><span>Tailwind</span><span>Framer Motion</span><span>Vite</span>
-            </div>
-            <div class="project-links">
-              <a href="https://realestateverifiedleads.ai/" rel="noopener">Live ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reveal">
-          <div class="project-art shot">
-            <span class="tag">SaaS Platform · Marine Reporting · 2025</span>
-            <image-slot id="proj-ireportify" src="assets/ireportify.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>iReportify
-              <span class="jp-sub">船 · marine &amp; industrial reporting</span>
-            </h3>
-            <p>A smart, image-based reporting platform built for marine engineers, supervisors, and shipping professionals. iReportify lets teams capture, upload, and share inspection reports instantly from anywhere in the world — with report generation, folder organization, and custom cover pages that simplify reporting and amplify on-board efficiency.</p>
-            <div class="project-stack">
-              <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>AWS S3</span>
-            </div>
-            <div class="project-links">
-              <a href="https://ireportify.com/" rel="noopener">Live ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="project reverse reveal">
-          <div class="project-art shot">
-            <span class="tag">Travel Platform · Himalayan Tourism · 2025</span>
-            <image-slot id="proj-easyprime" src="assets/easyprimeholidays.png" fit="cover" placeholder="Drop a 1906×1080 screenshot" shape="rounded" radius="10"></image-slot>
-          </div>
-          <div class="project-body">
-            <h3>Easy Prime Holidays
-              <span class="jp-sub">旅 · your TripAdvisor for Himalayan travels</span>
-            </h3>
-            <p>A travel-discovery and booking platform built as a TripAdvisor for Himalayan journeys. Travelers search by destination, dates, and party size to plan trips across the region, while curated destinations, blogs, and services guide every step — all wrapped in a calm, mountain-inspired interface designed to make exploring the Himalayas effortless.</p>
-            <div class="project-stack">
-              <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>Tailwind</span>
-            </div>
-            <div class="project-links">
-              <a href="https://www.easyprimeholidays.com/" rel="noopener">Live ↗</a>
-            </div>
-          </div>
-        </article>
-
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── skills ──────────────────────────────────────────── -->
-  <section class="skills">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">iii.</span>
-          <h2>The toolkit.</h2>
-        </div>
-        <p class="lede">A working list, not a wish list &mdash; the languages, frameworks, and tools I actually reach for in production.</p>
-      </div>
-
-      <div class="skill-grid">
-        <div class="skill-card reveal">
-          <h4>Languages</h4>
-          <span class="skill-sub jp">語 · the words</span>
-          <div class="badges">
-            <span class="badge">JavaScript</span>
-            <span class="badge">TypeScript</span>
-            <span class="badge">Python</span>
-            <span class="badge">C++</span>
-            <span class="badge">SQL</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <h4>Frontend</h4>
-          <span class="skill-sub jp">表 · the surface</span>
-          <div class="badges">
-            <span class="badge">React</span>
-            <span class="badge">Remix</span>
-            <span class="badge">Tailwind CSS</span>
-            <span class="badge">TanStack Query</span>
-            <span class="badge">Zustand</span>
-            <span class="badge">Redux</span>
-            <span class="badge">Shadcn UI</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <h4>Backend &amp; Data</h4>
-          <span class="skill-sub jp">裏 · what holds it up</span>
-          <div class="badges">
-            <span class="badge">Node.js</span>
-            <span class="badge">Express</span>
-            <span class="badge">MongoDB</span>
-            <span class="badge">SQL</span>
-            <span class="badge">WebSockets</span>
-            <span class="badge">Firebase</span>
-            <span class="badge">REST APIs</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <h4>Tools &amp; Platforms</h4>
-          <span class="skill-sub jp">道 · the way of working</span>
-          <div class="badges">
-            <span class="badge">Git</span>
-            <span class="badge">Shopify</span>
-            <span class="badge">Liquid</span>
-            <span class="badge">Postman</span>
-            <span class="badge">VS Code</span>
-            <span class="badge">Monaco</span>
-            <span class="badge">esbuild</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── experience ─────────────────────────────────────── -->
-  <section id="experience" class="process">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">iv.</span>
-          <h2>The path so far.</h2>
-        </div>
-        <p class="lede">From front-end fixes to founding-engineer work, in the order it happened. Each stop taught me something I still carry into the next build.</p>
-      </div>
-
-      <div class="process-list">
-        <div class="process-step reveal">
-          <div class="pstep-num">'25</div>
-          <div class="pstep-title">Founding Engineer<span class="jp-sub">TalentGPT · Remote · Oct 2025 — Present</span></div>
-          <div class="pstep-body">Building a job-portal SaaS from the ground up — scalable Node, Express and MongoDB services for listings, applications and users, ATS-style candidate filtering and search, and a React + TanStack front end with multi-tenant, role-based access. Server-side pagination and query tuning keep it fast as it grows.</div>
-        </div>
-        <div class="process-step reveal">
-          <div class="pstep-num">'24</div>
-          <div class="pstep-title">Project Intern<span class="jp-sub">Phemesoft · IBM Mentorship · Jan — Apr 2024</span></div>
-          <div class="pstep-body">Built a machine-learning project under IBM mentorship, implementing k-means clustering to personalize song recommendations and lifting recommendation accuracy by 25%. Worked in Python with scikit-learn and TensorFlow.</div>
-        </div>
-        <div class="process-step reveal">
-          <div class="pstep-num">'23</div>
-          <div class="pstep-title">Frontend Developer Intern<span class="jp-sub">Closetnerds · Remote · Feb — May 2023</span></div>
-          <div class="pstep-body">Crafted responsive pages in React that cut load times and lifted engagement, partnered with the design team on UI/UX improvements, and drove debugging work that brought site downtime down by 15%.</div>
-        </div>
-        <div class="process-step reveal">
-          <div class="pstep-num">'23</div>
-          <div class="pstep-title">Content Writer Intern<span class="jp-sub">OPPO · Remote · Mar — Jun 2023</span></div>
-          <div class="pstep-body">Produced gaming-community and mobile-games content for the Indian market — a 15% lift in audience engagement — backed by research and analysis that improved content relevance by 20%.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── recognition ───────────────────────────────────── -->
-  <section class="recognition">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">v.</span>
-          <h2>Marks along the way.</h2>
-        </div>
-        <p class="lede">The degrees, badges, and certificates picked up between builds. A meticulous, quick-learning habit — kept up one course at a time.</p>
-      </div>
-
-      <div class="rec-grid">
-        <div class="rec-card reveal">
-          <h4>Education</h4>
-          <span class="rec-sub jp">学 · the study</span>
-          <div class="rec-item">
-            <div class="rec-t">Master of Computer Applications</div>
-            <div class="rec-m">UPES Dehradun · CGPA 8.7 · 2022–2024</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-t">Bachelor of Computer Applications</div>
-            <div class="rec-m">Uttaranchal University · CGPA 8.6 · 2018–2021</div>
-          </div>
-        </div>
-
-        <div class="rec-card reveal">
-          <h4>Badges</h4>
-          <span class="rec-sub jp">章 · the marks</span>
-          <div class="rec-item">
-            <div class="rec-t">HackerRank Gold — SQL</div>
-            <div class="rec-m">Strong database query &amp; data manipulation</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-t">Hacktoberfest 2022</div>
-            <div class="rec-m">Awarded contributor badge</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-t">Best Performer — Web Team</div>
-            <div class="rec-m">OPEN Community, UPES · 2022–23</div>
-          </div>
-        </div>
-
-        <div class="rec-card reveal">
-          <h4>Certifications</h4>
-          <span class="rec-sub jp">証 · the proof</span>
-          <div class="rec-item">
-            <div class="rec-t">React &amp; TypeScript</div>
-            <div class="rec-m">Stephen Grider · Udemy · 2024</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-t">React — The Complete Guide</div>
-            <div class="rec-m">Academind · Udemy · 2023</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-t">The Complete JavaScript Course</div>
-            <div class="rec-m">~70 hours · Udemy · 2021</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── journal ─────────────────────────────────────────── -->
-  <section id="journal" class="journal">
-    <div class="wrap">
-      <div class="sect-head reveal">
-        <div>
-          <span class="sect-num">vi.</span>
-          <h2>Beyond the keyboard.</h2>
-        </div>
-        <p class="lede">Community work, event sites, and open-source contributions made alongside the day-to-day — usually with student teams and the people I learned this craft with.</p>
-      </div>
-
-      <div class="journal-list">
-        <article class="j-card reveal">
-          <div class="j-meta"><span>Event Site</span><span class="dot"></span><span>UPES-OPEN × WEBCRUX</span></div>
-          <h4>Dehashed</h4>
-          <p>Built the website for the Dehashed event organised by UPES-OPEN and WEBCRUX as a core member of the web team.</p>
-        </article>
-        <article class="j-card reveal">
-          <div class="j-meta"><span>Community</span><span class="dot"></span><span>Front-end</span></div>
-          <h4>UPES-OPEN</h4>
-          <p>Developed the front-end of the UPES-OPEN community website, working with the student developer team through 2022–23.</p>
-        </article>
-        <article class="j-card reveal">
-          <div class="j-meta"><span>Open Source</span><span class="dot"></span><span>Hacktoberfest</span></div>
-          <h4>Open-source contributions</h4>
-          <p>Active in open source — contributions across Hacktoberfest 2022 and the occasional pull request to tools I rely on.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── contact ─────────────────────────────────────────── -->
-  <section id="contact" class="contact">
-    <div class="wrap">
-      <span class="eyebrow no-rule" style="margin-bottom: 22px; display: inline-block;">Spring 2026 · Open to new work</span>
-      <h2>Let's build something <em>worth tending to.</em></h2>
-      <p class="lede">If you're a founder, a small studio, or a product team with a project that deserves real care end to end &mdash; from data model to interface &mdash; I'd love to hear about it. A short note works best.</p>
-      <div class="contact-cta">
-        <a href="mailto:akashpanwar9976@gmail.com" class="btn">akashpanwar9976@gmail.com <span class="arr">→</span></a>
-        <a href="https://github.com/akshpnwr" class="btn ghost" rel="noopener">See the code on GitHub</a>
-      </div>
-
-      <div class="contact-channels">
-        <a href="https://github.com/akshpnwr" rel="noopener">GitHub ↗</a>
-        <a href="https://linkedin.com/in/akash-panwar-27b0141bb" rel="noopener">LinkedIn ↗</a>
-        <a href="https://leetcode.com/akshpnwr" rel="noopener">LeetCode ↗</a>
-        <a href="https://salesforce.com/trailblazer/wpabg5kqn9smn0nbjg" rel="noopener">Trailblazer ↗</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="wrap">
-      <div>© 2026 Akash Panwar · Fullstack developer · Dehradun, India</div>
-      <div class="jp">桜 · built with care, in spring</div>
-    </div>
-  </footer>
-</main>
-
-<!-- petals + tweaks app -->
-<div id="petals-root" class="petals-layer" aria-hidden="true"></div>
-<div id="tweaks-root"></div>
-
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
-
-<script>
-  // Reveal on scroll (vanilla so it works even before React mounts)
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }
-  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
-
-</body>
+    <script>
+      // Reveal on scroll (vanilla so it works even before React mounts)
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
+  </body>
 </html>
